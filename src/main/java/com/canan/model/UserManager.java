@@ -1,4 +1,4 @@
-package com.canan.util;
+package com.canan.model;
 
 public class UserManager {
 	

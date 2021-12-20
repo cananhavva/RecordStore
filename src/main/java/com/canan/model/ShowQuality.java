@@ -1,4 +1,4 @@
-package com.canan.util;
+package com.canan.model;
 
 public enum ShowQuality {
 	p144(1, "144p"), p240(2, "240p"), p480(3, "480p"), p720(4, "720p"), p1080(5, "1080p");
