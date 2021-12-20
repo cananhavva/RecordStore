@@ -9,9 +9,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+
 public class Record {
 	private long id;
 	private String name;
-	private int year;
 	
 }

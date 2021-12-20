@@ -7,8 +7,9 @@ import javax.persistence.TypedQuery;
 import org.hibernate.Session;
 
 import com.canan.entity.LoginEntity;
+import com.canan.util.IDatabaseCrud;
 
-public class LoginController implements Controllable<LoginEntity> {
+public class LoginController implements IDatabaseCrud<LoginEntity> {
 	
 	@Override
 	// create
@@ -45,7 +46,7 @@ public class LoginController implements Controllable<LoginEntity> {
 				return null;
 			}
 		} catch (Exception e) {
-			System.out.println("find anında hata meydana geldi !!!!! " + Controllable.class);
+			System.out.println("find anında hata meydana geldi !!!!! " + IDatabaseCrud.class);
 			e.printStackTrace();
 		}
 		return null;

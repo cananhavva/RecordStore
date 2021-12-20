@@ -3,7 +3,7 @@ package com.canan.util;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import com.canan.entity.CustomerEntity;
+import com.canan.entity.AlbumEntity;
 
 public class HibernateUtil {
 	// dış dünyada bununla bu classa erişim sağlayabileceğim.
@@ -21,7 +21,7 @@ public class HibernateUtil {
 			Configuration configuration = new Configuration();
 			
 			// entity classlarımızı buraya ekleyeceğiz
-			configuration.addAnnotatedClass(CustomerEntity.class);
+			configuration.addAnnotatedClass(AlbumEntity.class);
 			
 			SessionFactory factory = configuration.configure("hibernate.cfg.xml").buildSessionFactory();
 			return factory;

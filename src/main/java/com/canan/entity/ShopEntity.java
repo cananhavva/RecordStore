@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,41 +30,33 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Builder
 @Entity
-@Table(name = "user")
-public class UserEntity implements Serializable {
+@Table(name = "shop")
+public class ShopEntity implements Serializable {
 	
-	private static final long serialVersionUID = 2980810188265138844L;
+	private static final long serialVersionUID = -5583805098749736314L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "shop_id")
+	private long shopId;
 	
-	@Column(name = "user_id")
-	private long id;
-	@Column(name = "user_name")
-	private String userName;
+	@Column(name = "be_completed")
+	private Boolean beCompleted;
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private UserEntity user;
 	
-	@Column(name = "user_lastname")
-	private String userLastname;
-	
-	@Column(name = "email")
-	private String eMail;
-	
-	@Column(name = "user_password")
-	private String userPassword;
-	
-	@Column(name = "phone")
-	private String phoneNumber;
-	
-	@Column(name = "isadmin")
-	private Boolean isAdmin = false;
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<ShopEntity> shops = new HashSet<>();
+	@OneToMany(mappedBy = "Shop", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<ShopRowEntity> rows = new HashSet<>();
 	
-	public void addshop(ShopEntity shop) {
-		if (this.shops == null) {
-			this.shops = new HashSet<>();
+	public void addShopRow(ShopRowEntity row) {
+		if (this.rows == null) {
+			this.rows = new HashSet<>();
 		}
-		this.shops.add(shop);
+		this.rows.add(row);
 	}
 }

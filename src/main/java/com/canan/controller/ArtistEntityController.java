@@ -6,12 +6,12 @@ import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
 
-import com.canan.entity.UserEntity;
+import com.canan.entity.ArtistEntity;
 import com.canan.util.IDatabaseCrud;
 
-public class UserEntityController implements IDatabaseCrud<UserEntity> {
+public class ArtistEntityController implements IDatabaseCrud<ArtistEntity> {
 	@Override
-	public void create(UserEntity entity) {
+	public void create(ArtistEntity entity) {
 		try {
 			Session session = databaseConnectionHibernate();
 			session.getTransaction().begin();
@@ -26,16 +26,16 @@ public class UserEntityController implements IDatabaseCrud<UserEntity> {
 	}
 	
 	@Override
-	public void delete(UserEntity entity) {
+	public void delete(ArtistEntity entity) {
 		
 		try {
-			UserEntity findEntity = find(entity.getId());
+			ArtistEntity findEntity = find(entity.getArtistId());
 			if (findEntity != null) {
 				Session session = databaseConnectionHibernate();
 				session.getTransaction().begin();
 				session.remove(findEntity);
 				session.getTransaction().commit();
-				System.out.println("Silme Basarili " + UserEntity.class);
+				System.out.println("Silme Ba�ar�l� " + ArtistEntity.class);
 			}
 		} catch (Exception e) {
 			System.out.println("silme an�nda hata meydana geldi !!!!! " + IDatabaseCrud.class);
@@ -45,79 +45,76 @@ public class UserEntityController implements IDatabaseCrud<UserEntity> {
 	}
 	
 	@Override
-	public void update(UserEntity entity) {
+	public void update(ArtistEntity entity) {
 		try {
-			UserEntity findEntity = find(entity.getId());
+			ArtistEntity findEntity = find(entity.getArtistId());
 			if (findEntity != null) {
-				findEntity.setUserName(entity.getUserName());
-				findEntity.setUserLastname(entity.getUserLastname());
-				findEntity.setUserPassword(entity.getUserPassword());
-				findEntity.setEMail(entity.getEMail());
-				findEntity.setPhoneNumber(entity.getPhoneNumber());
-				findEntity.setIsAdmin(entity.getIsAdmin());
+				findEntity.setArtistName(entity.getArtistName());
+				findEntity.setArtistLastName(entity.getArtistLastName());
+				findEntity.setDesc(entity.getDesc());
 				
 				Session session = databaseConnectionHibernate();
 				session.getTransaction().begin();
 				session.merge(findEntity);
 				session.getTransaction().commit();
-				System.out.println("G�ncelleme Ba�ar�l� " + UserEntity.class);
+				System.out.println("Güncelleme Başarılı " + ArtistEntity.class);
 			}
 			
 		} catch (Exception e) {
-			System.out.println("g�ncelleme an�nda hata meydana geldi !!!!! " + IDatabaseCrud.class);
+			System.out.println("güncelleme anında hata meydana geldi !!!!! " + IDatabaseCrud.class);
 			e.printStackTrace();
 		}
 	}
 	
-	public ArrayList<UserEntity> list(int rowCount) {
+	public ArrayList<ArtistEntity> list(int rowCount) {
 		Session session = databaseConnectionHibernate();
 		
 		if (rowCount == -1) {
-			String hql = "select str from UserEntity as str where str.id>=:key";
-			TypedQuery<UserEntity> typedQuery = session.createQuery(hql, UserEntity.class);
+			String hql = "select str from ArtistEntity as str where str.id>=:key";
+			TypedQuery<ArtistEntity> typedQuery = session.createQuery(hql, ArtistEntity.class);
 			
 			long id = 1L;
 			typedQuery.setParameter("key", id);
 			
-			ArrayList<UserEntity> arrayList = (ArrayList<UserEntity>) typedQuery.getResultList();
-			System.out.println("listelendi " + UserEntity.class);
+			ArrayList<ArtistEntity> arrayList = (ArrayList<ArtistEntity>) typedQuery.getResultList();
+			System.out.println("listelendi " + ArtistEntity.class);
 			return arrayList;
 		} else {
-			String hql = "select str from UserEntity as str where str.id>=:key";
-			TypedQuery<UserEntity> typedQuery = session.createQuery(hql, UserEntity.class);
+			String hql = "select str from ArtistEntity as str where str.id>=:key";
+			TypedQuery<ArtistEntity> typedQuery = session.createQuery(hql, ArtistEntity.class);
 			typedQuery.setMaxResults(rowCount);
 			long id = 1L;
 			typedQuery.setParameter("key", id);
 			
-			ArrayList<UserEntity> arrayList = (ArrayList<UserEntity>) typedQuery.getResultList();
-			System.out.println("listelendi " + UserEntity.class);
+			ArrayList<ArtistEntity> arrayList = (ArrayList<ArtistEntity>) typedQuery.getResultList();
+			System.out.println("listelendi " + ArtistEntity.class);
 			return arrayList;
 		}
 	}
 	
 	@Override
-	public UserEntity find(long id) {
+	public ArtistEntity find(long id) {
 		Session session = databaseConnectionHibernate();
-		UserEntity entity;
+		ArtistEntity entity;
 		try {
-			entity = session.find(UserEntity.class, id);
+			entity = session.find(ArtistEntity.class, id);
 			
 			if (entity != null) {
 				System.out.println("bulundu... " + entity);
 				return entity;
 			} else {
-				System.out.println("Arad���n�z kriterde sonu�lar bulunamad� ...");
+				System.out.println("Aradığınız kriterde sonuçlar bulunamadı ...");
 				return null;
 			}
 		} catch (Exception e) {
-			System.out.println("find an�nda hata meydana geldi !!!!! " + IDatabaseCrud.class);
+			System.out.println("find anında hata meydana geldi !!!!! " + IDatabaseCrud.class);
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
 	@Override
-	public UserEntity singleResult(long id) {
+	public ArtistEntity singleResult(long id) {
 		return IDatabaseCrud.super.singleResult(id);
 	}
 	

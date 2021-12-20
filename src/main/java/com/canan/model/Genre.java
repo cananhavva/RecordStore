@@ -1,57 +1,72 @@
 package com.canan.model;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class Genre {
+import com.canan.entity.GenreEntity;
+
+public enum Genre {
+	
+	Rock(1, "Rock", "Rock SEC"), Jazz(2, "Jazz", "Jazz SEC"),
+	
+	Classic(3, "Classic", "Classic SEC"), Pop(4, "Pop", "Pop SEC"), Rap(5, "Rap", "Rap SEC"),
+	DoNotGenre(999, "DoNotGenre", "DoNotGenre SEC");
+	
+	private static final HashMap<String, Genre> BY_NAME = new HashMap<String, Genre>();
+	private static final HashMap<Long, Genre> BY_ID = new HashMap<Long, Genre>();
+	private static final ArrayList<GenreEntity> ALL_GENRES = new ArrayList<>();
+	
+	static {
+		for (Genre genre : values()) {
+			BY_NAME.put(genre.name, genre);
+			BY_ID.put(genre.id, genre);
+			ALL_GENRES.add(new GenreEntity(genre));
+		}
+	}
+	
 	private long id;
-	private String genre;
+	private String name;
+	private String desc;
 	
-	public Genre() {
-		super();
-	}
-	
-	public Genre(long id, String genre) {
-		super();
+	private Genre(long id, String name, String desc) {
 		this.id = id;
-		this.genre = genre;
+		this.name = name;
+		this.desc = desc;
 	}
 	
-	@Override
-	public int hashCode() {
-		return Objects.hash(genre, id);
+	public static Genre byName(String name) {
+		Genre genre = BY_NAME.get(name);
+		if (genre != null)
+			return BY_NAME.get(name);
+		else
+			return DoNotGenre;
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Genre other = (Genre) obj;
-		return Objects.equals(genre, other.genre) && id == other.id;
+	public static ArrayList<GenreEntity> getAllGenres() {
+		return ALL_GENRES;
 	}
 	
-	@Override
-	public String toString() {
-		return "Genre [id=" + id + ", genre=" + genre + "]";
+	public String getName() {
+		return this.name;
 	}
 	
 	public long getId() {
-		return id;
+		return this.id;
 	}
 	
-	public void setId(long id) {
-		this.id = id;
+	public String getDesc() {
+		return desc;
 	}
 	
-	public String getGenre() {
-		return genre;
+	public static Genre getById(long id) {
+		return BY_ID.get(id);
 	}
 	
-	public void setGenre(String genre) {
-		this.genre = genre;
+	public static Genre getByName(String name) {
+		return BY_NAME.get(name);
 	}
 	
+	public static ArrayList<Genre> getAllGenreTypes() {
+		return new ArrayList<>(BY_NAME.values());
+	}
 }
