@@ -1,5 +1,6 @@
 package com.canan.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,7 +36,9 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "DVD")
-public class DVDEntity {
+public class DVDEntity implements Serializable {
+	
+	private static final long serialVersionUID = -53744228676368653L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

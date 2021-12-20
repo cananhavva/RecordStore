@@ -1,5 +1,6 @@
 package com.canan.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +29,10 @@ import lombok.ToString;
 @Builder
 @Entity
 @Table(name = "artist")
-public class ArtistEntity {
+public class ArtistEntity implements Serializable {
+	
+	private static final long serialVersionUID = 4400262885047745927L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
